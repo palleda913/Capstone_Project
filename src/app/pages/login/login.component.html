@@ -1,0 +1,47 @@
+<h1 style="text-align: center;font-weight: bold;font-size: 40px;color: #fff;">Login</h1>
+
+<div style="width:50%; margin: 30px auto;border: 2px solid black;">
+
+  <div class="alert alert-danger font-weight-bold h4" *ngIf="isInvalid">
+    Invalid username and password.
+  </div>
+  <div class="alert alert-info font-weight-bold h4" *ngIf="isLogout">
+    You have been logged out.
+  </div>
+
+  <form #form='ngForm' (ngSubmit)="onSubmit()" style="margin: 20px;color: #fff;">
+    
+    <div class="form-group">
+      
+      <label class="h3 font-weight-bold">Email address</label>
+      <input type="text" class="form-control form-control-lg font-weight-bold" id="email" name="email"
+        placeholder="Enter email" required autofocus [(ngModel)]="model.username" #email="ngModel" autocomplete="email" >
+      <div [hidden]="email.valid || email.untouched" class="alert alert-danger h5 font-weight-bold">
+        Email is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="h3 font-weight-bold">Password</label>
+      <input type="password" class="form-control form-control-lg font-weight-bold" id="password" name="password"
+        autocomplete="password" placeholder="Password" required [(ngModel)]="model.password" #password='ngModel'>
+      <div [hidden]="password.valid || password.untouched" class="alert alert-danger h5 font-weight-bold">
+        Password is required
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <input type="checkbox" id="remember_me" name="remember-me" [(ngModel)]="model.remembered">
+      <label for="remember_me" class="inline ml-2 mb-4">Remember me</label>
+      <h5><a class="float-right font-weight-bold" routerLink="/register">New User? click to Sign Up</a></h5>
+      <br>
+      <br>
+    </div>
+    
+
+    <div class="form-group">
+      <button [disabled]="!form.form.valid" type="submit"
+        class="btn btn-lg font-weight-bold btn-success btn-block" style="background-color: green;width: 50%;">Login</button>
+    </div>
+  </form>
+</div>

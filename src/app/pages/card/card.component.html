@@ -1,0 +1,58 @@
+<img
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP0rQMO5Byc32eiNszTWoPFNSaIRkQimFM3g&usqp=CAU"
+height="350"
+width="100%"
+alt=""
+loading="lazy"
+
+/>
+<br>
+<br>
+<br>
+<h1 class="display-4 text-center bg-dark mb-5 font-weight-bold" style="color: #fff;">{{title}}</h1>
+
+<form class="form-inline" style="margin-left: 400px;">
+  <input name="search" [(ngModel)]="searchText" placeholder="Search for products ..."
+    class="form-control font-weight-bold mr-2" size="30" type="search">
+
+  <button (click)="search=searchText" [(ngModel)]="search" name="search"
+    class="btn btn-primary btn-lg font-weight-bold">Search<i class="fa fa-search ml-2" aria-hidden="true"></i>
+  </button>
+
+ 
+</form>
+<br>
+<button (click)="price='productPrice'" name="sort" [(ngModel)]="price"
+class="btn btn-primary btn-lg font-weight-bold ml-4" >Sort By Price <i class="fa fa-sort"
+  aria-hidden="true"></i></button>
+<div class="row mt-5">
+  <div class="col-md-4 mb-3 col-lg-4" *ngFor="let productInfo of page?.content | orderBy:price |filter:search">
+    <div class="card text-center bg-light mb-4 border-info">
+      <div class="card-body">
+
+        <a routerLink="/product/{{productInfo.productId}}">
+          <img style="width: 100% ;height: 300px ;border-radius: 2%;" src="{{productInfo.productIcon}}"
+            alt="{{productInfo.productName}}">
+        </a>
+        <h3 class="card-title font-weight-bold mt-2 ">{{productInfo.productName}}</h3>
+        <p class="card-text mb-1 h4 font-weight-bold"><strong>Price : Rs. </strong>{{productInfo.productPrice }}
+        </p>
+        <p class="card-text mb-1 h4 font-weight-bold"><strong>Stock : </strong>{{productInfo.productStock }}</p>
+        <br>
+        <p><a routerLink="/product/{{productInfo.productId}}" *ngIf="productInfo.productStatus == 0; else unavailable"
+            class="btn btn-primary btn-lg font-weight-bold">See more</a></p>
+        <ng-template #unavailable>
+          <h2 class="text-danger font-weight-bold">Product is Unavailable!</h2>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+  <div *ngIf="page?.content.length==undefined" class="alert alert-warning col-md-12 h4 font-weight-bold ml-4 mr-5"
+    role="alert" style="background-color:aqua;">
+    
+    No products found.
+  </div>
+</div>
+
+<app-pagination [currentPage]="page"></app-pagination>
